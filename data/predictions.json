@@ -1,0 +1,829 @@
+[
+  {
+    "id": "4f92af09-7860-4c89-a466-d23113ca1a4e",
+    "timestamp": "2026-05-21T21:44:21.965950Z",
+    "numbers": [
+      11,
+      13,
+      15,
+      41,
+      44
+    ],
+    "stars": [
+      6,
+      11
+    ],
+    "uniquenessScore": 39,
+    "source": "predicted",
+    "sum": 124,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 11,
+          "signal": 0.275,
+          "reasons": [
+            "overdue",
+            "pair frequency"
+          ]
+        },
+        {
+          "number": 13,
+          "signal": 0.34,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "recency decay",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 15,
+          "signal": 0.299,
+          "reasons": [
+            "hot streak",
+            "sum proximity",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 41,
+          "signal": 0.286,
+          "reasons": [
+            "overdue"
+          ]
+        },
+        {
+          "number": 44,
+          "signal": 0.294,
+          "reasons": [
+            "hot streak",
+            "pair frequency",
+            "recency decay",
+            "odd even balance"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 6,
+          "signal": 0.7,
+          "reasons": []
+        },
+        {
+          "star": 11,
+          "signal": 0.15,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "cf3fa3b2-0450-4251-9db9-814f47da7f92",
+    "timestamp": "2026-05-21T21:44:21.966536Z",
+    "numbers": [
+      2,
+      15,
+      28,
+      36,
+      45
+    ],
+    "stars": [
+      6,
+      7
+    ],
+    "uniquenessScore": 29,
+    "source": "predicted",
+    "sum": 126,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 2,
+          "signal": 0.405,
+          "reasons": [
+            "hot streak",
+            "pair frequency",
+            "recency decay",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 15,
+          "signal": 0.299,
+          "reasons": [
+            "hot streak",
+            "sum proximity",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 28,
+          "signal": 0.275,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "recency decay",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 36,
+          "signal": 0.301,
+          "reasons": [
+            "overdue",
+            "sum proximity",
+            "pair frequency",
+            "odd even balance",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 45,
+          "signal": 0.422,
+          "reasons": [
+            "hot streak",
+            "pair frequency",
+            "recency decay"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 6,
+          "signal": 0.7,
+          "reasons": []
+        },
+        {
+          "star": 7,
+          "signal": 0.3,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "1dc85f4a-d957-410e-9124-b0fd841b78f9",
+    "timestamp": "2026-05-21T21:44:21.967176Z",
+    "numbers": [
+      1,
+      7,
+      33,
+      38,
+      47
+    ],
+    "stars": [
+      1,
+      4
+    ],
+    "uniquenessScore": 23,
+    "source": "predicted",
+    "sum": 126,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 1,
+          "signal": 0.27,
+          "reasons": [
+            "frequency regression",
+            "overdue"
+          ]
+        },
+        {
+          "number": 7,
+          "signal": 0.265,
+          "reasons": [
+            "pair frequency",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 33,
+          "signal": 0.282,
+          "reasons": [
+            "overdue",
+            "sum proximity"
+          ]
+        },
+        {
+          "number": 38,
+          "signal": 0.282,
+          "reasons": [
+            "frequency regression",
+            "sum proximity",
+            "recency decay",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 47,
+          "signal": 0.272,
+          "reasons": [
+            "overdue"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 1,
+          "signal": 0.55,
+          "reasons": []
+        },
+        {
+          "star": 4,
+          "signal": 0.2,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "bd78f4ae-3bb2-4ab9-9eba-986173c5f40b",
+    "timestamp": "2026-05-21T22:47:57.794024Z",
+    "numbers": [
+      13,
+      19,
+      28,
+      32,
+      36
+    ],
+    "stars": [
+      1,
+      6
+    ],
+    "uniquenessScore": 26,
+    "source": "predicted",
+    "sum": 128,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 13,
+          "signal": 0.34,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "recency decay",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 19,
+          "signal": 0.328,
+          "reasons": [
+            "hot streak",
+            "sum proximity",
+            "pair frequency",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 28,
+          "signal": 0.275,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "recency decay",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 32,
+          "signal": 0.266,
+          "reasons": [
+            "overdue",
+            "sum proximity",
+            "pair frequency",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 36,
+          "signal": 0.301,
+          "reasons": [
+            "overdue",
+            "sum proximity",
+            "pair frequency",
+            "odd even balance",
+            "consecutive gap"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 1,
+          "signal": 0.55,
+          "reasons": []
+        },
+        {
+          "star": 6,
+          "signal": 0.7,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "7298f9b9-b641-4507-8e86-375ec7104ad1",
+    "timestamp": "2026-05-21T22:47:57.795734Z",
+    "numbers": [
+      5,
+      14,
+      27,
+      39,
+      43
+    ],
+    "stars": [
+      8,
+      12
+    ],
+    "uniquenessScore": 36,
+    "source": "predicted",
+    "sum": 128,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 5,
+          "signal": 0.302,
+          "reasons": [
+            "frequency regression",
+            "overdue"
+          ]
+        },
+        {
+          "number": 14,
+          "signal": 0.273,
+          "reasons": [
+            "overdue",
+            "sum proximity",
+            "pair frequency",
+            "odd even balance",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 27,
+          "signal": 0.262,
+          "reasons": [
+            "frequency regression",
+            "sum proximity"
+          ]
+        },
+        {
+          "number": 39,
+          "signal": 0.323,
+          "reasons": [
+            "hot streak",
+            "pair frequency",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 43,
+          "signal": 0.291,
+          "reasons": [
+            "frequency regression",
+            "overdue"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 8,
+          "signal": 0.1,
+          "reasons": []
+        },
+        {
+          "star": 12,
+          "signal": 0.2,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "8dbdb1b4-4bac-45f7-932b-e0bf7edf8354",
+    "timestamp": "2026-05-21T22:47:57.796818Z",
+    "numbers": [
+      7,
+      23,
+      26,
+      33,
+      38
+    ],
+    "stars": [
+      6,
+      11
+    ],
+    "uniquenessScore": 31,
+    "source": "predicted",
+    "sum": 127,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 7,
+          "signal": 0.265,
+          "reasons": [
+            "pair frequency",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 23,
+          "signal": 0.283,
+          "reasons": [
+            "sum proximity",
+            "pair frequency"
+          ]
+        },
+        {
+          "number": 26,
+          "signal": 0.24,
+          "reasons": [
+            "sum proximity",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 33,
+          "signal": 0.282,
+          "reasons": [
+            "overdue",
+            "sum proximity"
+          ]
+        },
+        {
+          "number": 38,
+          "signal": 0.282,
+          "reasons": [
+            "frequency regression",
+            "sum proximity",
+            "recency decay",
+            "odd even balance"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 6,
+          "signal": 0.7,
+          "reasons": []
+        },
+        {
+          "star": 11,
+          "signal": 0.15,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "db08f0dd-cba4-45c0-bc2d-eff53fd91bfa",
+    "timestamp": "2026-05-21T22:48:56.002533Z",
+    "numbers": [
+      8,
+      17,
+      20,
+      41,
+      42
+    ],
+    "stars": [
+      3,
+      6
+    ],
+    "uniquenessScore": 21,
+    "source": "predicted",
+    "sum": 128,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 8,
+          "signal": 0.254,
+          "reasons": [
+            "overdue",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 17,
+          "signal": 0.243,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 20,
+          "signal": 0.24,
+          "reasons": [
+            "sum proximity",
+            "pair frequency",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 41,
+          "signal": 0.286,
+          "reasons": [
+            "overdue"
+          ]
+        },
+        {
+          "number": 42,
+          "signal": 0.309,
+          "reasons": [
+            "frequency regression",
+            "overdue",
+            "pair frequency",
+            "odd even balance"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 3,
+          "signal": 0.55,
+          "reasons": []
+        },
+        {
+          "star": 6,
+          "signal": 0.7,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "dfe84758-1fbd-45f8-9b02-f921de2b4ea4",
+    "timestamp": "2026-05-21T22:48:56.004255Z",
+    "numbers": [
+      4,
+      26,
+      27,
+      30,
+      45
+    ],
+    "stars": [
+      8,
+      12
+    ],
+    "uniquenessScore": 31,
+    "source": "predicted",
+    "sum": 132,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 4,
+          "signal": 0.255,
+          "reasons": [
+            "overdue",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 26,
+          "signal": 0.24,
+          "reasons": [
+            "sum proximity",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 27,
+          "signal": 0.262,
+          "reasons": [
+            "frequency regression",
+            "sum proximity"
+          ]
+        },
+        {
+          "number": 30,
+          "signal": 0.251,
+          "reasons": [
+            "sum proximity",
+            "odd even balance"
+          ]
+        },
+        {
+          "number": 45,
+          "signal": 0.422,
+          "reasons": [
+            "hot streak",
+            "pair frequency",
+            "recency decay"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 8,
+          "signal": 0.1,
+          "reasons": []
+        },
+        {
+          "star": 12,
+          "signal": 0.2,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  },
+  {
+    "id": "273c063f-558a-48d5-96da-ab67e762b673",
+    "timestamp": "2026-05-21T22:48:56.005787Z",
+    "numbers": [
+      14,
+      15,
+      21,
+      35,
+      46
+    ],
+    "stars": [
+      3,
+      9
+    ],
+    "uniquenessScore": 32,
+    "source": "predicted",
+    "sum": 131,
+    "sumTarget": 127.4,
+    "modelsUsed": [
+      "frequency_regression",
+      "overdue",
+      "hot_streak",
+      "sum_proximity",
+      "pair_frequency",
+      "recency_decay",
+      "odd_even_balance",
+      "decade_balance",
+      "consecutive_gap"
+    ],
+    "explanation": {
+      "numbers": [
+        {
+          "number": 14,
+          "signal": 0.273,
+          "reasons": [
+            "overdue",
+            "sum proximity",
+            "pair frequency",
+            "odd even balance",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 15,
+          "signal": 0.299,
+          "reasons": [
+            "hot streak",
+            "sum proximity",
+            "recency decay"
+          ]
+        },
+        {
+          "number": 21,
+          "signal": 0.316,
+          "reasons": [
+            "frequency regression",
+            "overdue",
+            "sum proximity"
+          ]
+        },
+        {
+          "number": 35,
+          "signal": 0.369,
+          "reasons": [
+            "hot streak",
+            "sum proximity",
+            "pair frequency",
+            "recency decay",
+            "consecutive gap"
+          ]
+        },
+        {
+          "number": 46,
+          "signal": 0.265,
+          "reasons": [
+            "pair frequency",
+            "recency decay",
+            "odd even balance"
+          ]
+        }
+      ],
+      "stars": [
+        {
+          "star": 3,
+          "signal": 0.55,
+          "reasons": []
+        },
+        {
+          "star": 9,
+          "signal": 0.25,
+          "reasons": []
+        }
+      ]
+    },
+    "disclaimer": "EuroMillions draws are independently certified as truly random using hardware RNG. No statistical model can predict lottery outcomes. This tool analyses human selection behaviour to minimise jackpot splits \u2014 not to improve winning odds. Track prediction accuracy over time to observe chance-level performance."
+  }
+]

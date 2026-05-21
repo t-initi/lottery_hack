@@ -1,0 +1,46 @@
+name: Generate Predictions
+
+on:
+  schedule:
+    # Monday 12:00 UTC  → predicts for Tuesday draw
+    - cron: "0 12 * * 1"
+    # Thursday 12:00 UTC → predicts for Friday draw
+    - cron: "0 12 * * 4"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch latest draw history
+        run: python scripts/fetch_draws.py
+
+      - name: Generate predictions & notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/predict_and_notify.py
+
+      - name: Commit updated data files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/predictions.json data/draw_history.json
+          git diff --staged --quiet || git commit -m "chore: auto predictions $(date -u '+%Y-%m-%d')"
+          git push

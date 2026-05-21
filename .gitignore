@@ -1,0 +1,30 @@
+# --- Python ---
+.venv/
+venv/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# --- Secrets ---
+.env
+.env.local
+
+# --- Data: personal picks and derived files (not shared) ---
+data/my_picks.json
+data/computed_stats.json
+data/analysis_*.md
+
+# data/draw_history.json    → tracked (Action reads + commits it)
+# data/predictions.json     → tracked (Action commits it)
+
+# --- Frontend ---
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+.pnpm-store/
+
+# --- Misc ---
+*.log
+.DS_Store
+notes.txt
