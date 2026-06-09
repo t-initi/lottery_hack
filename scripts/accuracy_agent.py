@@ -33,6 +33,7 @@ except ImportError:
 from engine.data import load_draws
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL", "")
 DATA_DIR = ROOT / "data"
 PREDICTIONS_FILE = DATA_DIR / "predictions.json"
 
@@ -211,6 +212,72 @@ Please structure your response with clear headings and be specific about what to
     return system, prompt
 
 
+# ── Slack notification ────────────────────────────────────────────────────────
+
+def _post_slack_analysis(accuracy: dict, analysis: str, report_path: Path) -> None:
+    if not SLACK_WEBHOOK_URL:
+        print("  SLACK_WEBHOOK_URL not set — skipping Slack notification")
+        return
+
+    src_lines = "\n".join(
+        f"• *{src}*: avg `{s['avg_num']}` nums, `{s['avg_star']}` stars — best `{s['max_num']}` nums ({s['picks']} picks)"
+        for src, s in accuracy["per_source"].items()
+    )
+
+    dist_lines = "  ".join(
+        f"`{k}`: {v}"
+        for k, v in sorted(accuracy["distribution"].items())
+        if v > 0
+    )
+
+    # Trim Claude's analysis to fit Slack's 3000-char block limit
+    analysis_preview = analysis[:2800]
+    if len(analysis) > 2800:
+        analysis_preview += f"\n\n_… full report in `{report_path.name}`_"
+
+    payload = {
+        "blocks": [
+            {
+                "type": "header",
+                "text": {"type": "plain_text", "text": "🤖 Claude Accuracy Report", "emoji": True},
+            },
+            {
+                "type": "context",
+                "elements": [{"type": "mrkdwn", "text": f"{accuracy['total_picks']} picks evaluated · {accuracy['draws_available']} draws in history"}],
+            },
+            {"type": "divider"},
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*Per-source performance*\n{src_lines}"},
+            },
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*Match distribution*\n{dist_lines}"},
+            },
+            {"type": "divider"},
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*Claude's analysis*\n{analysis_preview}"},
+            },
+        ]
+    }
+
+    body = json.dumps(payload).encode()
+    req = urllib.request.Request(
+        SLACK_WEBHOOK_URL,
+        data=body,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            print(f"  Slack: {resp.status} {resp.reason}")
+    except urllib.error.HTTPError as e:
+        print(f"  Slack error {e.code}: {e.read().decode()[:200]}")
+    except Exception as e:
+        print(f"  Slack error: {e}")
+
+
 # ── Report saving ─────────────────────────────────────────────────────────────
 
 def _save_report(accuracy: dict, analysis: str) -> Path:
@@ -294,6 +361,9 @@ def main() -> None:
     print(analysis[:800])
     if len(analysis) > 800:
         print(f"\n… ({len(analysis)} chars total, see {report_path})")
+
+    print("\nPosting to Slack…")
+    _post_slack_analysis(accuracy, analysis, report_path)
 
 
 if __name__ == "__main__":
