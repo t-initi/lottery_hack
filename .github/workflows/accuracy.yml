@@ -1,0 +1,36 @@
+name: Accuracy Review (Claude)
+
+on:
+  schedule:
+    # Wednesday 18:00 UTC → reviews Tuesday's draw results
+    - cron: "0 18 * * 3"
+    # Saturday 18:00 UTC → reviews Friday's draw results
+    - cron: "0 18 * * 6"
+  workflow_dispatch:
+
+jobs:
+  accuracy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch latest draw history
+        run: python scripts/fetch_draws.py
+
+      - name: Run accuracy agent & notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python scripts/accuracy_agent.py
