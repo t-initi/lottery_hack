@@ -16,7 +16,6 @@ from __future__ import annotations
 import json
 import os
 import sys
-import urllib.request
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,12 +29,60 @@ try:
 except ImportError:
     pass
 
-from engine.data import load_draws
+import urllib.request
+import xml.etree.ElementTree as ET
+
+from engine.data import load_draws, save_draws
 
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL", "")
 DATA_DIR = ROOT / "data"
 PREDICTIONS_FILE = DATA_DIR / "predictions.json"
+
+UK_XML_URL = "https://www.national-lottery.co.uk/results/euromillions/draw-history/csv"
+
+
+def _fetch_latest_draw() -> dict | None:
+    """Fetch the most recent EuroMillions draw from the UK National Lottery XML."""
+    try:
+        req = urllib.request.Request(UK_XML_URL, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            raw = resp.read()
+        root = ET.fromstring(raw.decode("utf-8", errors="replace"))
+        game = root.find(".//game[@type='euro']")
+        if game is None:
+            return None
+        draw_date = game.findtext(".//draw-date")
+        balls_el = game.find("balls")
+        if not draw_date or balls_el is None:
+            return None
+        numbers = sorted(int(el.text) for el in balls_el.findall("ball") if el.text)
+        stars = sorted(
+            int(el.text)
+            for el in balls_el.findall("bonus-ball")
+            if el.get("type") == "luckystar" and el.text
+        )
+        if len(numbers) != 5 or len(stars) != 2:
+            return None
+        return {"date": draw_date.strip(), "numbers": numbers, "stars": stars}
+    except Exception as e:
+        print(f"  Could not fetch latest draw: {e}")
+        return None
+
+
+def _ensure_latest_draw(draws: list[dict]) -> list[dict]:
+    """Pull the latest real draw and add it if not already present."""
+    latest = _fetch_latest_draw()
+    if not latest:
+        return draws
+    existing_dates = {d["date"] for d in draws}
+    if latest["date"] in existing_dates:
+        print(f"  Latest draw already saved: {latest['date']}")
+        return draws
+    print(f"  New draw fetched: {latest['date']} — {latest['numbers']} ★ {latest['stars']}")
+    updated = sorted(draws + [latest], key=lambda d: d["date"])
+    save_draws(updated)
+    return updated
 
 
 # ── Data loading ──────────────────────────────────────────────────────────────
@@ -337,6 +384,10 @@ def main() -> None:
         sys.exit(1)
 
     print(f"Loaded {len(predictions)} predictions, {len(draws)} draws")
+
+    print("Fetching latest draw result…")
+    draws = _ensure_latest_draw(draws)
+    print(f"  Draw history now covers up to: {draws[-1]['date']}")
 
     print("Computing accuracy…")
     accuracy = compute_accuracy(predictions, draws)

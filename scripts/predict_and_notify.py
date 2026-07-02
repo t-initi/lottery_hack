@@ -39,6 +39,7 @@ from engine.models import list_models, run_model
 # ── Constants ─────────────────────────────────────────────────────────────────
 
 SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL", "")
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 DATA_DIR = ROOT / "data"
 PREDICTIONS_FILE = DATA_DIR / "predictions.json"
 
@@ -79,6 +80,95 @@ def _post_slack(payload: dict) -> None:
         print(f"  Slack error {e.code}: {e.read().decode()[:200]}")
     except Exception as e:
         print(f"  Slack error: {e}")
+
+
+def _claude_prediction(draws: list[dict], signals: dict) -> dict | None:
+    """Ask Claude to pick numbers using a contrarian strategy, save as a prediction."""
+    if not ANTHROPIC_API_KEY:
+        print("  ANTHROPIC_API_KEY not set — skipping Claude prediction")
+        return None
+
+    from engine.bias import uniqueness_score
+    from engine.data import make_pick
+
+    recent_str = "\n".join(
+        f"  {d['date']}: {d['numbers']} ★ {d['stars']}"
+        for d in draws[-30:]
+    )
+    top_nums    = [s["number"] for s in signals["numbers"]]
+    overdue     = sorted(signals["numbers"], key=lambda s: s["overdue"], reverse=True)[:8]
+    cold        = sorted(signals["numbers"], key=lambda s: s["cold"],    reverse=True)[:8]
+    top_stars   = [s["star"] for s in signals["stars"]]
+
+    prompt = f"""You are picking EuroMillions numbers for the next draw.
+Goal: choose numbers FEWER people typically pick, to minimise jackpot splits if we win.
+
+Recent 30 draws:
+{recent_str}
+
+Statistical signals (from the prediction engine):
+- Top ensemble numbers: {top_nums}
+- Most overdue:         {[s["number"] for s in overdue]}
+- Cold (below frequency): {[s["number"] for s in cold]}
+- Overdue stars:        {top_stars}
+
+Human bias to AVOID: birthday range (1-31), lucky 7 family (7,17,27,37,47),
+round numbers (10,20,30,40,50), low numbers (1-10).
+Prefer: 32-50 range, uncommon gaps, numbers humans instinctively skip.
+
+Pick 5 UNIQUE numbers (1-50) and 2 UNIQUE lucky stars (1-12).
+
+Reply ONLY with this JSON — no markdown, no explanation outside the JSON:
+{{"numbers": [n1, n2, n3, n4, n5], "stars": [s1, s2], "reasoning": "one sentence"}}"""
+
+    body = json.dumps({
+        "model": "claude-sonnet-4-6",
+        "max_tokens": 256,
+        "messages": [{"role": "user", "content": prompt}],
+    }).encode()
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=body,
+        headers={
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read())
+        text = data["content"][0]["text"].strip()
+        # Strip markdown fences if Claude wraps in ```json
+        if text.startswith("```"):
+            text = "\n".join(
+                line for line in text.splitlines()
+                if not line.strip().startswith("```")
+            ).strip()
+        parsed = json.loads(text)
+        numbers = sorted(int(n) for n in parsed["numbers"])
+        stars   = sorted(int(s) for s in parsed["stars"])
+        reasoning = parsed.get("reasoning", "")
+
+        if len(numbers) != 5 or not all(1 <= n <= 50 for n in numbers):
+            print(f"  Invalid numbers from Claude: {numbers}")
+            return None
+        if len(stars) != 2 or not all(1 <= s <= 12 for s in stars):
+            print(f"  Invalid stars from Claude: {stars}")
+            return None
+
+        pick = make_pick(numbers, stars, uniqueness_score(numbers, stars), source="claude")
+        pick["reasoning"] = reasoning
+        return pick
+
+    except urllib.error.HTTPError as e:
+        print(f"  Claude API error {e.code}: {e.read().decode()[:200]}")
+    except json.JSONDecodeError:
+        print(f"  Claude returned non-JSON: {text[:120]}")
+    except Exception as e:
+        print(f"  Claude prediction error: {e}")
+    return None
 
 
 def _ball(n: int) -> str:
@@ -193,9 +283,31 @@ def main() -> None:
     else:
         print("  No ML models available — skipping")
 
+    # ── Claude prediction ─────────────────────────────────────────────────────
+
+    print("\n[4/4] Claude prediction…")
+    signals = top_signals(draws)
+    claude_pick = _claude_prediction(draws, signals)
+    if claude_pick:
+        all_predictions.append(claude_pick)
+        blocks.append({"type": "divider"})
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": (
+                    f"*🧠 Claude Prediction*\n"
+                    f"• {_pick_line(claude_pick['numbers'], claude_pick['stars'], claude_pick['uniquenessScore'])}\n"
+                    f"_{claude_pick.get('reasoning', '')}_"
+                ),
+            },
+        })
+        print(f"  Pick: {claude_pick['numbers']} ★ {claude_pick['stars']}")
+    else:
+        print("  Skipped.")
+
     # ── Top signals sidebar ───────────────────────────────────────────────────
 
-    signals = top_signals(draws)
     top_nums = " ".join(_ball(s["number"]) for s in signals["numbers"][:5])
     top_stars = " ".join(f"★{s['star']}" for s in signals["stars"][:4])
 
